@@ -1,9 +1,68 @@
+// import basics
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { styled } from "styled-components";
+
+// import utils to make api request
+import fetchRequest from "../utils/fetch-request";
+import { getProduct } from "../services/api";
+
+// import components
+import productDescription from "../assets/product-description";
+import AddToCart from "./AddToCart";
+
 const ProductDetails = () => {
-    return (
-  
-      <div>ProductDetails</div>
-  
-    );
-  };
-  
-  export default ProductDetails;
+  const { productId } = useParams();
+
+  // states
+  const [product, setProduct] = useState({});
+  const {
+    name,
+    price,
+    imageSrc
+  } = product;
+
+  // get product details from server
+  useEffect(() => {
+    (async () => {
+      const res = await fetchRequest(() => getProduct(productId));
+      setProduct(res.data)
+    })();
+  }, [setProduct, productId]);
+
+  return (
+    <Wrapper>
+      <Img src={imageSrc} />
+      <Details>
+        <Name>{name}</Name>
+        <Price>{price}</Price>
+        <AddToCart productId={productId} />
+        <p>{productDescription}</p>
+      </Details>
+    </Wrapper>
+  );
+};
+
+export default ProductDetails;
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 100px 300px;
+`;
+const Img = styled.img`
+  width: 35%;
+  align-self: center;
+`;
+const Details = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 40%;
+`;
+const Name = styled.h1`
+  padding-bottom: 20px;
+  font-weight: bold;
+`;
+const Price =styled.h2`
+  padding-bottom: 20px;
+`;
