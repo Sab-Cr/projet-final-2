@@ -26,4 +26,13 @@ express()
   // REST endpoints?
   .get('/bacon', (req, res) => res.status(200).json('🥓'))
 
+  .get("/ecommercewatch/products/:_id", getProduct)
+
+  // /ecommercewatch/products?start=10&limit=10 - (pour chercher produit pour le FE)
+  .get("/ecommercewatch/products", getProducts) 
+
+  //.patch("/ecommercewatch/productsplus/:_id", updateProductPlusOne)
+  .patch("/ecommercewatch/productsminus/:_id", updateProductMinusOne)
+
+
   .listen(PORT, () => console.info(`Listening on port ${PORT}`));
