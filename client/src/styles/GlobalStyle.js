@@ -4,6 +4,9 @@ const GlobalStyle = createGlobalStyle`
     :root {
       // All custom style variables
       --ultra-light-gray: #F3F4F6;
+	  font-family : Monospace;
+
+
     }
 
     /* http://meyerweb.com/eric/tools/css/reset/ 
