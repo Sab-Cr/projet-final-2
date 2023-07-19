@@ -3,9 +3,6 @@ import { createGlobalStyle } from 'styled-components';
 const GlobalStyle = createGlobalStyle`
     :root {
       // All custom style variables
-      --ultra-light-gray: #F3F4F6;
-	  font-family : Monospace;
-
 
     }
 
@@ -40,7 +37,8 @@ footer, header, hgroup, menu, nav, section {
 	display: block;
 }
 body {
-	line-height: 1.3;
+	font-family: sans-serif;
+	line-height: 1.5;
 	margin: 0px auto;
 	width: 100vw;
   height: 100vh;
