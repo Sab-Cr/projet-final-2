@@ -2,6 +2,7 @@
 
 const express = require('express');
 const morgan = require('morgan');
+const { getProducts, getProduct,updateProductMinusOne } = require('./shop');
 
 const PORT = 4000;
 
