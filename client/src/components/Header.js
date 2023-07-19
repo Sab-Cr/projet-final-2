@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 const Header = () => {
   return (
     <Toolbar>
-      <h2>This our store</h2>
+      <h1>Rolex Shop</h1>
     </Toolbar>
   );
 };
@@ -11,5 +11,10 @@ const Header = () => {
 export default Header;
 
 const Toolbar = styled.div`
-  height: 53px;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  background:gainsboro;
+  height: 4rem;
 `;
