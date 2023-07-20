@@ -2,8 +2,8 @@
 
 const express = require('express');
 const morgan = require('morgan');
-const { getProducts, getProduct,updateProductMinusOne } = require('./shop');
 
+const {getProduct,getProducts, updateProductMinusOne, createAddItemCart, updateQuantityItem, deleteItemCart} = require("./shop")
 const PORT = 4000;
 
 express()
@@ -19,7 +19,7 @@ express()
     next();
   })
   .use(morgan('tiny'))
-  .use(express.static('./server/assets'))
+  .use(express.static('./server/assets')) 
   .use(express.json())
   .use(express.urlencoded({ extended: false }))
   .use('/', express.static(__dirname + '/'))
@@ -31,9 +31,12 @@ express()
 
   // /ecommercewatch/products?start=10&limit=10 - (pour chercher produit pour le FE)
   .get("/ecommercewatch/products", getProducts) 
+  
 
   //.patch("/ecommercewatch/productsplus/:_id", updateProductPlusOne)
   .patch("/ecommercewatch/productsminus/:_id", updateProductMinusOne)
-
+  .patch("ecommercewatch/quantityitem", updateQuantityItem)
+  .post("/ecommercewatch/additemcart", createAddItemCart)  
+  .delete("/ecommercewatch/itemcart", deleteItemCart)
 
   .listen(PORT, () => console.info(`Listening on port ${PORT}`));
