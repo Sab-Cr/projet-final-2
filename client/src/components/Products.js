@@ -6,19 +6,38 @@ import { styled } from "styled-components";
 import fetchRequest from "../utils/fetch-request";
 import { getProducts } from "../services/api";
 import ProductItem from "./ProductItem";
+import Pagination from "./Pagination";
 import watchCover from "../assets/images/watch-cover.avif";
 
 const Products = () => {
 // states
-  const [products, setProducts] = useState(null);
+  const [allProducts, setAllProducts] = useState([]);
+  const[pageProducts, setPageProducts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [watchesPerPage] = useState(5);
 
 // get products from server
   useEffect(() => {
     (async () => {
       const res = await fetchRequest(() => getProducts());
-      setProducts(res.data)
+      setAllProducts(res.data)
     })();
     }, []);
+
+  //Get current watches indexes
+  const IndexOfLastWatch = currentPage * watchesPerPage;
+  const indexOfFirstWatch = IndexOfLastWatch - watchesPerPage;
+
+  //Show correct amount of products
+  useEffect(() => {
+   if (allProducts.length>0){
+    const currentWatches = allProducts.slice(indexOfFirstWatch,IndexOfLastWatch);
+    setPageProducts(currentWatches)
+   }
+    }, [allProducts,currentPage, indexOfFirstWatch, IndexOfLastWatch]);
+
+  //Change Page (pass props from child to parent)
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <>
@@ -26,16 +45,20 @@ const Products = () => {
         <Cover>Our products</Cover>
       </CoverContainer>
 
-      {!products
+      {!allProducts
         ? <Loading> Loading Page </Loading>
 
-        : <Wrapper>
-          {products.map((item)=>{
+        : <div>
+          <Wrapper>
+            {pageProducts.map((item)=>{
             return(
               <ProductItem key={item["_id"]} item={item}/>
             )
             })}
           </Wrapper>
+          <Pagination watchesPerPage = {watchesPerPage} totalWatches = {allProducts.length} paginate={paginate}/>
+        </div>
+
         }
     </>
   );

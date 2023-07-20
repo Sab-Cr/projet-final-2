@@ -28,6 +28,7 @@ const Container = styled(NavLink)`
   justify-content: space-between;
   width:45%;
   padding : 2.2rem;
+  color : black;
   text-decoration: none;
 `;
 const Img = styled.img`
