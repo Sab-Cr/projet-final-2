@@ -16,7 +16,7 @@ const getProducts = async(req,res) =>{
         const db = client.db("watchShop");
         const collection = db.collection("products");
     
-        const { start = 0, limit = 25 } = req.query;
+        const { start = 0, limit = 25, category } = req.query;
     
         const startIdx = parseInt(start);
         const limitNum = parseInt(limit);
@@ -32,8 +32,8 @@ const getProducts = async(req,res) =>{
         }
     
         const result = await collection
-          .find()
-          .skip(startIdx)
+          .find({category})
+          .skip(startIdx === 0 ? startIdx : startIdx + limitNum)
           .limit(limitNum)
           .toArray();
     
@@ -128,12 +128,9 @@ const createAddItemCart = async (req, res) => {
       client.close(); 
     }
   
-    
-  
     console.log("disconnected!");
   };
 
-// input  name = "qty" value=88
   const updateQuantityItem = async (req,res)=>{
     const { _id, qty } = req.params;
     let _idint =parseInt(_id);
