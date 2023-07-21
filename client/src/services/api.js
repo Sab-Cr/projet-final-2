@@ -8,6 +8,11 @@ export const getProduct = async (productId) => {
   return await res.json();
 };
 
+export const getCart = async () => {
+  const res = await fetch("/ecommercewatch/getallitemscart");
+  return await res.json();
+};
+
 export const addToCart = async (body) => {
   const res = await fetch("/ecommercewatch/additemcart", {
     method: "POST",
@@ -19,4 +24,11 @@ export const addToCart = async (body) => {
   });
 
   return await res.json();
+};
+
+export const deleteCartItem = async (itemId) => {
+  const res = await fetch(`ecommercewatch/deleteitemcart/${itemId}`, {
+    method: "DELETE"
+  });
+  return res.json();
 };

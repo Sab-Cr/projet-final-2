@@ -1,78 +1,81 @@
 import { useEffect, useState } from "react";
 import { styled } from "styled-components";
+import { getCart, deleteCartItem } from "../services/api";
+import fetchRequest from "../utils/fetch-request";
+import Selections from "./Selections";
 
 const Cart = () => {
-  const tempInitialValue = [{
-    _id: 6543,
-    name: "Barska GB12166 Fitness Watch with Heart Rate Monitor",
-    price: "$49.99",
-    cartQty: 2,
-    numInStock: 10
-  }];
-
-  const [items, setItems] = useState(tempInitialValue);
+  // states
+  const [items, setItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [reload, setReload] = useState(true);
 
   // utils
-  const qtySelection = (numInStock) => {
-    // the quantity selection cannot exceed the inventory in stock
-    const quantities = Array.from(Array(numInStock + 1).keys());
-    return quantities.slice(1);
-  };
-
   const calculateSubtotal = () => {
     return items.reduce((total, item) => {
-      const { price, cartQty } = item;
+      const { price, quantity } = item;
       const priceNumber = price.slice(1);
-      const itemTotal = priceNumber * cartQty;
+      const itemTotal = priceNumber * quantity;
       return total + itemTotal;
     }, 0).toFixed(2);
   };
 
-  const handleQtyChange = (event, index) => {
+  const handleSelectionChange = (event, index) => {
     const { value } = event.target;
 
     const newState = [...items];
     const item = newState[index];
-    item.cartQty = value;
+    item.quantity = value;
     setItems(newState);
+  };
 
-    // send changes to server
+  const handleRemove = async (itemId) => {
+    await fetchRequest(() => deleteCartItem(itemId));
+    setReload(prevState => !prevState);
   };
 
   // populate cart data
-  // useEffect(() => {
-  //   // fetch cart information (product number and quantity)
-  //   // fetch individual product information
-  //   // setItems
-  // }, [setItems]);
+  useEffect(() => {
+    (async () => {
+      const res = await fetchRequest(getCart);
+      setItems(res.data);
+      setIsLoading(false);
+    }
+    )();
+  }, [reload, setItems, setIsLoading]);
+  console.log(isLoading)
+  // rendering
+  if (isLoading) return null;
 
   return (
     <div>
       <CartContainer>
-        <h1>Your Bag (1)</h1>
-        {
+        <h1>Your Bag {items ? `(${items.length})` : (0)}</h1>
+        { items && 
           items.map((item, index) => {
-            const { _id, name, price, cartQty, numInStock } = item;
-            const qtyOptions = qtySelection(numInStock);
+            const { _id, name, price, quantity, numInStock } = item;
 
             return (
-              <>
+              <div key={`cart-item-${index}`}>
                 <h3>{name}</h3>
                 <p>{_id}</p>
                 <p>{price}</p>
-                <select value={cartQty} onChange={(event) => handleQtyChange(event, index)}>
-                  {qtyOptions.map(qty => <option value={qty}>{qty}</option>)}
-                </select>
-              </>
+                <Selections
+                  quantity={quantity}
+                  handleChange={(event) => handleSelectionChange(event, index)}
+                  numInStock={numInStock}
+                />
+                <button onClick={() => handleRemove(_id)}>Remove</button>
+              </div>
             )
           })
         }
       </CartContainer>
       <OrderSummary>
         <h1>Order Summary</h1>
-        <p>Subtotal <span>$ {calculateSubtotal()}</span></p>
+        <p>Subtotal <span>$ {items ? calculateSubtotal() : 0}</span></p>
         <p>Shipping <span>$ 10.00</span></p>
-        <p>Total <span>$ {Number(calculateSubtotal()) + 10}</span></p>
+        <p>Total <span>$ {items ? Number(calculateSubtotal()) + 10 : 0}</span></p>
       </OrderSummary>
     </div>
   );
