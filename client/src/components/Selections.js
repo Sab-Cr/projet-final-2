@@ -1,7 +1,7 @@
 import { useRef } from "react";
 
 
-const Selections = ({ quantity, setQuantity, numInStock }) => {
+const Selections = ({ quantity, handleChange, numInStock }) => {
   // create the selections for the dropdown for selecting qty
   const selectionsRef = useRef([]);
   selectionsRef.current = (
@@ -9,12 +9,6 @@ const Selections = ({ quantity, setQuantity, numInStock }) => {
       .from(Array(numInStock + 1).keys())
       .slice(1)
   );
-
-
-  // utils
-  const handleChange = (event) => {
-    setQuantity(event.target.value);
-  };
 
   return (
     <select value={quantity} onChange={handleChange}>

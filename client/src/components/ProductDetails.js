@@ -27,6 +27,11 @@ const ProductDetails = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
 
+  // utils
+  const handleSelectionChange = (event) => {
+    setQuantity(event.target.value);
+  };
+
   // get product details from server
   useEffect(() => {
     (async () => {
@@ -46,7 +51,7 @@ const ProductDetails = () => {
         <Price>{price}</Price>
         <Selections
           quantity={quantity}
-          setQuantity={setQuantity}
+          handleChange={handleSelectionChange}
           numInStock={numInStock}
         />
         <AddToCart product={product} quantity={quantity} />
