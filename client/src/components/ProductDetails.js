@@ -10,6 +10,7 @@ import { getProduct } from "../services/api";
 // import components
 import productDescription from "../assets/product-description";
 import AddToCart from "./AddToCart";
+import Selections from "./Selections";
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -19,16 +20,23 @@ const ProductDetails = () => {
   const {
     name,
     price,
-    imageSrc
+    imageSrc,
+    numInStock
   } = product;
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [quantity, setQuantity] = useState(1);
 
   // get product details from server
   useEffect(() => {
     (async () => {
       const res = await fetchRequest(() => getProduct(productId));
       setProduct(res.data)
+      setIsLoading(false);
     })();
   }, [setProduct, productId]);
+
+  if (isLoading) return null;
 
   return (
     <Wrapper>
@@ -36,7 +44,12 @@ const ProductDetails = () => {
       <Details>
         <Name>{name}</Name>
         <Price>{price}</Price>
-        <AddToCart productId={productId} />
+        <Selections
+          quantity={quantity}
+          setQuantity={setQuantity}
+          numInStock={numInStock}
+        />
+        <AddToCart product={product} quantity={quantity} />
         <p>{productDescription}</p>
       </Details>
     </Wrapper>
@@ -63,6 +76,6 @@ const Name = styled.h1`
   padding-bottom: 20px;
   font-weight: bold;
 `;
-const Price =styled.h2`
+const Price = styled.h2`
   padding-bottom: 20px;
 `;
