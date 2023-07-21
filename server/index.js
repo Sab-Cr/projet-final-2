@@ -37,7 +37,7 @@ express()
   .patch("/ecommercewatch/productsminus/:_id", updateProductMinusOne)
   .patch("ecommercewatch/quantityitem", updateQuantityItem)
   .post("/ecommercewatch/additemcart", createAddItemCart)  
-  .delete("/ecommercewatch/itemcart", deleteItemCart)
+  .delete("/ecommercewatch/deleteitemcart/:_id", deleteItemCart)
   .get("/ecommercewatch/getallitemscart", getAllItemsCarts)
   
 

@@ -162,7 +162,7 @@ const deleteItemCart = async (req, res) => {
       const client = new MongoClient(MONGO_URI, options);
       await client.connect();
   
-      const db = client.db(watchShop);
+      const db = client.db("watchShop");
       const collection = db.collection("cart");
   
       const query = { _id: _idint};
