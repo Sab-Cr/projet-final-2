@@ -3,7 +3,7 @@
 const express = require('express');
 const morgan = require('morgan');
 
-const {getProduct,getProducts, updateProductMinusOne, createAddItemCart, updateQuantityItem, deleteItemCart} = require("./shop")
+const {getProduct,getProducts, updateProductMinusOne, createAddItemCart, updateQuantityItem, deleteItemCart, getAllItemsCarts,} = require("./shop")
 const PORT = 4000;
 
 express()
@@ -38,5 +38,7 @@ express()
   .patch("ecommercewatch/quantityitem", updateQuantityItem)
   .post("/ecommercewatch/additemcart", createAddItemCart)  
   .delete("/ecommercewatch/itemcart", deleteItemCart)
+  .get("/ecommercewatch/getallitemscart", getAllItemsCarts)
+  
 
   .listen(PORT, () => console.info(`Listening on port ${PORT}`));
