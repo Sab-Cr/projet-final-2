@@ -1,12 +1,16 @@
 import { styled } from "styled-components";
+import { useNavigate } from "react-router-dom";
 import fetchRequest from "../utils/fetch-request";
 import { addToCart } from "../services/api";
 
 const AddToCart = ({ product, quantity }) => {
 
+  const navigate = useNavigate();
+
   const handleClick = async () => {
     const body = { ...product, quantity };
-    await fetchRequest(() => addToCart(body))
+    await fetchRequest(() => addToCart(body));
+    navigate("/cart");
   };
 
   return (
