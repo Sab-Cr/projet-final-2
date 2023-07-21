@@ -1,8 +1,12 @@
 import { styled } from "styled-components";
+import fetchRequest from "../utils/fetch-request";
+import { addToCart } from "../services/api";
 
-const AddToCart = ({ productId }) => {
-  const handleClick = () => {
-    
+const AddToCart = ({ product, quantity }) => {
+
+  const handleClick = async () => {
+    const body = { ...product, quantity };
+    await fetchRequest(() => addToCart(body))
   };
 
   return (
@@ -25,5 +29,6 @@ const Button = styled.button`
 
   &:hover {
     opacity: 0.5;
+    cursor: pointer;
   }
 `;
