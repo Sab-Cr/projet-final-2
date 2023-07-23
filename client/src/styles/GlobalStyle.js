@@ -70,6 +70,11 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+a {
+	color: black;
+	text-decoration: none;
+	font-family: sans-serif;
+}
 `;
 
 export default GlobalStyle;
