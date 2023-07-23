@@ -27,8 +27,19 @@ export const addToCart = async (body) => {
 };
 
 export const deleteCartItem = async (itemId) => {
-  const res = await fetch(`ecommercewatch/deleteitemcart/${itemId}`, {
+  const res = await fetch(`/ecommercewatch/deleteitemcart/${itemId}`, {
     method: "DELETE"
   });
   return res.json();
 };
+
+export const updateCart = async (itemId, quantity) => {
+  const res = await fetch(`/ecommercewatch/quantityitem/${itemId}/${quantity}`, {
+    method: "PATCH",
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    }
+  });
+  return res.json();
+}

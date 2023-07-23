@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { styled } from "styled-components";
-import { getCart, deleteCartItem } from "../services/api";
+import { getCart, deleteCartItem, updateCart } from "../services/api";
 import fetchRequest from "../utils/fetch-request";
 import Selections from "./Selections";
 
@@ -20,13 +20,15 @@ const Cart = () => {
     }, 0).toFixed(2);
   };
 
-  const handleSelectionChange = (event, index) => {
+  const handleSelectionChange = async (event, index, itemId) => {
     const { value } = event.target;
 
     const newState = [...items];
     const item = newState[index];
     item.quantity = value;
     setItems(newState);
+
+    await fetchRequest(() => updateCart(itemId, value))
   };
 
   const handleRemove = async (itemId) => {
@@ -43,7 +45,7 @@ const Cart = () => {
     }
     )();
   }, [reload, setItems, setIsLoading]);
-  console.log(isLoading)
+
   // rendering
   if (isLoading) return null;
 
@@ -62,7 +64,7 @@ const Cart = () => {
                 <p>{price}</p>
                 <Selections
                   quantity={quantity}
-                  handleChange={(event) => handleSelectionChange(event, index)}
+                  handleChange={(event) => handleSelectionChange(event, index, _id)}
                   numInStock={numInStock}
                 />
                 <button onClick={() => handleRemove(_id)}>Remove</button>
