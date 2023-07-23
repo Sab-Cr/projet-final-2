@@ -31,16 +31,21 @@ const getProducts = async(req,res) =>{
     
         const result = await collection
           .find(category&&{category})
-          .skip(startIdx === 0 ? startIdx : startIdx + limitNum)
+          .skip(startIdx === 0 ? startIdx : startIdx * limitNum)
           .limit(limitNum)
           .toArray();
-    
+
+        const totalCategory = await collection
+        .find(category&&{category})
+        .toArray();
+
         if (result.length > 0) {
           const responseData = {
             status: 200,
             start: startIdx,
             limit: Math.min(limitNum, result.length),
             total: totalDocuments,
+            subTotal : totalCategory.length,
             data: result,
           };
           res.status(200).json(responseData);

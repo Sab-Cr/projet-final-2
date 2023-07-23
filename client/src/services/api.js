@@ -1,5 +1,5 @@
-export const getProducts = async () => {
-  const res = await fetch(`/ecommercewatch/products`);
+export const getProducts = async (start, limit, category) => {
+  const res = await fetch(`/ecommercewatch/products?start=${start}&limit=${limit}${!category || category === "All"? "" : "&category="+category}`);
   return await res.json();
 };
 
@@ -42,4 +42,9 @@ export const updateCart = async (itemId, quantity) => {
     }
   });
   return res.json();
+}
+
+export const getCategories = async () => {
+  const res = await fetch(`/ecommercewatch/categorie`);
+  return await res.json();
 }
