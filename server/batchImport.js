@@ -1,4 +1,4 @@
-const items = require("./data/companies.json");
+const items = require("./data/bodylocation.json");
 const { MongoClient } = require("mongodb");
 const  MONGO_URI  = "mongodb+srv://GroupProject:EcommerceWatch@cluster0.uyidmzs.mongodb.net/watchShop?retryWrites=true&w=majority";
 
@@ -17,7 +17,7 @@ const batchImport = async (req, res) => {
         const db = client.db("watchShop");
         console.log("connected!");
       
-        const result= await db.collection("companies").insertMany(items);
+        const result= await db.collection("bodylocation").insertMany(items);
         console.log(result)
         console.log(result.insertedCount)
         //res.status(201).json({ status: 201, data: req.body });
