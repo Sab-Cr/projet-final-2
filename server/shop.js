@@ -205,7 +205,63 @@ const deleteItemCart = async (req, res) => {
       } catch (error) {
         res.status(500).json({ status: 500, message: "Internal Server Error" });
       }
+    }
+
+      const getcategorie = async(req,res) =>{
+        try {
+            const client = new MongoClient(MONGO_URI, options);
+            await client.connect();
+        
+            const db = client.db("watchShop");
+            const collection = db.collection("categorie");
+            const result = await collection
+            .find({})
+            .toArray();
+        
+            if (result.length > 0) {
+              const responseData = {
+                status: 200,
+                data: result,
+              };
+              res.status(200).json(responseData);
+            } else {
+              res.status(404).json({ status: 404, message: "No products found" });
+            }
+        
+            client.close();
+          } catch (error) {
+            res.status(500).json({ status: 500, message: "Internal Server Error" });
+          } 
 }
+  
+const getbodylocation = async(req,res) =>{
+  try {
+      const client = new MongoClient(MONGO_URI, options);
+      await client.connect();
+  
+      const db = client.db("watchShop");
+      const collection = db.collection("bodylocation");
+      const result = await collection
+      .find({})
+      .toArray();
+  
+      if (result.length > 0) {
+        const responseData = {
+          status: 200,
+          data: result,
+        };
+        res.status(200).json(responseData);
+      } else {
+        res.status(404).json({ status: 404, message: "No products found" });
+      }
+  
+      client.close();
+    } catch (error) {
+      res.status(500).json({ status: 500, message: "Internal Server Error" });
+    }
+  }
+
+
 
 module.exports = {
     getProducts,
@@ -214,5 +270,7 @@ module.exports = {
     createAddItemCart,
     updateQuantityItem,
     deleteItemCart,
-    getAllItemsCarts
+    getAllItemsCarts,
+    getcategorie,
+    getbodylocation
 }

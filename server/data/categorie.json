@@ -1,0 +1,30 @@
+[
+  {
+    "_id":1,
+    "category": "Entertainment"
+  },
+  {
+    "_id":2,
+    "category": "Fitness"
+  },
+  {
+    "_id":3,
+    "category": "Gaming"
+  },
+  {
+    "_id":4,
+    "category": "Industrial"
+  },
+  {
+    "_id":5,
+    "category": "Lifestyle"
+  },
+  {
+    "_id":6,
+    "category": "Medical"
+  },
+  {
+    "_id":7,
+    "category": "Pets and Animals"
+  }
+]
