@@ -125,8 +125,8 @@ const createAddItemCart = async (req, res) => {
   const updateQuantityItem = async (req,res)=>{
     const { _id, qty } = req.params;
     let _idint =parseInt(_id);
-    let _qtyint =parseInt(_id);
-
+    let _qtyint =parseInt(qty);
+    console.log(_id)
     try {
       const client = new MongoClient(MONGO_URI, options);
       await client.connect();
