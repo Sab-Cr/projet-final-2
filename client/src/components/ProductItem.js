@@ -1,9 +1,10 @@
-// import basics
+// Import basics
 import { styled } from "styled-components";
 import {NavLink} from "react-router-dom";
 
 const ProductItem = ({item}) => {
-    const {_id, category, imageSrc, name, numInStock, price} = item;
+  //Variables
+  const {_id, category, imageSrc, name, numInStock, price} = item;
     
   return (
     <Container to= {`/products/${_id}`}>
