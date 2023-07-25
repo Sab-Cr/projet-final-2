@@ -1,8 +1,12 @@
+import MainTop from "./MainTop.js";
+import Categories from "./Categories.js";
+
 const Home = () => {
   return (
-
-    <div>Home</div>
-
+    <div>
+      <MainTop></MainTop>
+      <Categories></Categories>
+    </div>
   );
 };
 
