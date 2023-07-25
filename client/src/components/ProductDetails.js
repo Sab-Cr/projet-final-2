@@ -49,12 +49,20 @@ const ProductDetails = () => {
       <Details>
         <Name>{name}</Name>
         <Price>{price}</Price>
-        <Selections
+        {
+          numInStock !== 0
+            ? <Selections
+              quantity={quantity}
+              handleChange={handleSelectionChange}
+              numInStock={numInStock}
+            />
+            : "Out of stock"
+        }
+        <AddToCart
+          product={product}
           quantity={quantity}
-          handleChange={handleSelectionChange}
-          numInStock={numInStock}
+          disabled={numInStock !== 0 ? false : true}
         />
-        <AddToCart product={product} quantity={quantity} />
         <p>{productDescription}</p>
       </Details>
     </Wrapper>
