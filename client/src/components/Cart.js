@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { styled } from "styled-components";
 import { getCart, deleteCartItem, updateCart } from "../services/api";
 import fetchRequest from "../utils/fetch-request";
@@ -50,44 +51,110 @@ const Cart = () => {
   if (isLoading) return null;
 
   return (
-    <div>
+    <Wrapper>
       <CartContainer>
-        <h1>Your Bag {items ? `(${items.length})` : (0)}</h1>
-        { items && 
+        <Title>Your Bag {items ? `(${items.length})` : `(0)`}</Title>
+        {items &&
           items.map((item, index) => {
-            const { _id, name, price, quantity, numInStock } = item;
+            const { _id, name, imageSrc, price, quantity, numInStock } = item;
 
             return (
-              <div key={`cart-item-${index}`}>
-                <h3>{name}</h3>
-                <p>{_id}</p>
-                <p>{price}</p>
-                <Selections
-                  quantity={quantity}
-                  handleChange={(event) => handleSelectionChange(event, index, _id)}
-                  numInStock={numInStock}
-                />
-                <button onClick={() => handleRemove(_id)}>Remove</button>
-              </div>
+              <Product key={`cart-item-${index}`}>
+                <LeftProductContainer>
+                  <Img src={imageSrc} />
+                  <div>
+                    <h3>{name}</h3>
+                    <ProductId>#{_id}</ProductId>
+                    <Selections
+                      quantity={quantity}
+                      handleChange={(event) => handleSelectionChange(event, index, _id)}
+                      numInStock={numInStock}
+                    />
+                    <RemoveLink onClick={() => handleRemove(_id)}>Remove</RemoveLink>
+                  </div>
+                </LeftProductContainer>
+                <RightProductContainer>
+                  <h3>{price}</h3>
+                </RightProductContainer>
+              </Product>
             )
           })
         }
       </CartContainer>
       <OrderSummary>
-        <h1>Order Summary</h1>
-        <p>Subtotal <span>$ {items ? calculateSubtotal() : 0}</span></p>
-        <p>Shipping <span>$ 10.00</span></p>
-        <p>Total <span>$ {items ? Number(calculateSubtotal()) + 10 : 0}</span></p>
+        <Title>Order Summary</Title>
+        <P>Subtotal <span>$ {items ? calculateSubtotal() : 0}</span></P>
+        <P>Shipping <span>$ 10.00</span></P>
+        <P>Total <span>$ {items ? Number(calculateSubtotal()) + 10 : 0}</span></P>
+        <Button>Checkout</Button>
       </OrderSummary>
-    </div>
+    </Wrapper>
   );
 };
 
 export default Cart;
-
+const Wrapper = styled.div`
+  padding: 50px;
+  justify-content: space-between;
+  display: flex;
+`;
 const CartContainer = styled.div`
-  padding: 20px;
+  width: 60%;
+`;
+const Title = styled.h1`
+  margin-bottom: 20px;
+`;
+const ProductId = styled.p`
+  color: grey;
+  font-size: 0.9em;
+  padding-bottom: 20px;
+`;
+const Product = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 50px;
+`;
+const LeftProductContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+const RightProductContainer = styled.div`
+  width: 20%;
+`;
+const Img = styled.img`
+  width: 150px;
+  margin-right: 20px;
+`;
+const RemoveLink = styled(Link)`
+  display: inline-block;
 `;
 const OrderSummary = styled.div`
+  width: 500px;
+  height: 300px;
+  padding: 20px;
+  background-color: black;
+  border-radius: 10px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+`;
+const P = styled.p`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+`;
+const Button = styled.button`
+  padding: 15px 20px;
+  margin-top: 50px;
+  color: white;
+  background-color: red;
+  border: none;
+  border-radius: 25px;
+  font-size: 1.15em;
+  opacity: ${({disabled}) => disabled ? "0.5" : "1"};
+  cursor: ${({disabled}) => disabled ? "default" : "pointer"};
 
+  &:hover {
+    opacity: 0.5;
+  }
 `;
