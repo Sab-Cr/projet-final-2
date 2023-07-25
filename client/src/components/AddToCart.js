@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import fetchRequest from "../utils/fetch-request";
 import { addToCart } from "../services/api";
 
-const AddToCart = ({ product, quantity }) => {
+const AddToCart = ({ product, quantity, disabled }) => {
 
   const navigate = useNavigate();
 
@@ -14,7 +14,7 @@ const AddToCart = ({ product, quantity }) => {
   };
 
   return (
-    <Button onClick={handleClick}>
+    <Button onClick={handleClick} disabled={disabled}>
       Add to bag
     </Button>
   );
@@ -30,9 +30,10 @@ const Button = styled.button`
   border: none;
   border-radius: 25px;
   font-size: 1.15em;
+  opacity: ${({disabled}) => disabled ? "0.5" : "1"};
+  cursor: ${({disabled}) => disabled ? "default" : "pointer"};
 
   &:hover {
     opacity: 0.5;
-    cursor: pointer;
   }
 `;
