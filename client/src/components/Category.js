@@ -34,7 +34,8 @@ const Image = styled.div`
   background-size: cover;
   background-position: center;
   transition: opacity 0.75s;
-  opacity: 0.5
+  opacity: 0.70
+
 `;
 
 const CategoryContent = styled.div`
@@ -47,7 +48,7 @@ const CategoryContent = styled.div`
 
   transform: translateX(-50%);
   left: 50%;
-  color: black;
+  color: white;
   font-weight: bold;
   transition: transform 0.75s;
 `;
