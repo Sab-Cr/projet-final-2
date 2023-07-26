@@ -4,6 +4,7 @@ import { styled } from "styled-components";
 import { getCart, deleteCartItem, updateCart } from "../services/api";
 import fetchRequest from "../utils/fetch-request";
 import Selections from "./Selections";
+import Button from "./Button";
 
 const Cart = () => {
   // states
@@ -86,7 +87,7 @@ const Cart = () => {
         <P>Subtotal <span>$ {items ? calculateSubtotal() : 0}</span></P>
         <P>Shipping <span>$ 10.00</span></P>
         <P>Total <span>$ {items ? Number(calculateSubtotal()) + 10 : 0}</span></P>
-        <Button>Checkout</Button>
+        <CheckoutButton bgColor="red">Checkout</CheckoutButton>
       </OrderSummary>
     </Wrapper>
   );
@@ -143,18 +144,15 @@ const P = styled.p`
   justify-content: space-between;
   margin-bottom: 20px;
 `;
-const Button = styled.button`
-  padding: 15px 20px;
+const CheckoutButton = styled(Button)`
   margin-top: 50px;
   color: white;
-  background-color: red;
-  border: none;
-  border-radius: 25px;
-  font-size: 1.15em;
-  opacity: ${({disabled}) => disabled ? "0.5" : "1"};
-  cursor: ${({disabled}) => disabled ? "default" : "pointer"};
 
   &:hover {
-    opacity: 0.5;
+    background-color: red;
+    font-weight: 400;
+    color: white;
+    opacity: 0.8;
+    transform: scale(1);
   }
 `;

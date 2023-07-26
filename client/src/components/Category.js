@@ -1,5 +1,26 @@
 import React from "react";
 import styled, { createGlobalStyle } from "styled-components";
+import Button from "./Button";
+
+const Category = ({ title, image, link }) => {
+  return (
+    <CategoryContainer className="category">
+      <Image className="image" style={{ backgroundImage: `url(${image})` }} />
+      <CategoryContent className="category-content">
+        <Title>{title}</Title>
+        <Button
+          bgColor="black"
+          size="small"
+        >
+          {link}
+        </Button>
+      </CategoryContent>
+      <HoverStyles />
+    </CategoryContainer>
+  );
+};
+
+export default Category;
 
 const HoverStyles = createGlobalStyle`
   .category:hover .image {
@@ -34,7 +55,7 @@ const Image = styled.div`
   background-size: cover;
   background-position: center;
   transition: opacity 0.75s;
-  opacity: 0.70
+  opacity: 0.70;
 
 `;
 
@@ -56,37 +77,3 @@ const CategoryContent = styled.div`
 const Title = styled.h2`
   font-size: x-large;
 `;
-
-const ShopButton = styled.button`
-  background: #000;
-  color: #fff;
-  padding: 10px 20px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-  border-radius: 1em;
-  transition-duration: 0.75s;
-
-
-  &:hover {
-    color: black;
-    background: white;
-    transform: scale(1.1);
-    font-weight: bold;
-  }
-`;
-
-const Category = ({ title, image, link }) => {
-  return (
-    <CategoryContainer className="category">
-      <Image className="image" style={{ backgroundImage: `url(${image})` }} />
-      <CategoryContent className="category-content">
-        <Title>{title}</Title>
-        <ShopButton>{link}</ShopButton>
-      </CategoryContent>
-      <HoverStyles />
-    </CategoryContainer>
-  );
-};
-
-export default Category;
