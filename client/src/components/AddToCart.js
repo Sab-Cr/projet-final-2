@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 import { useNavigate } from "react-router-dom";
 import fetchRequest from "../utils/fetch-request";
 import { addToCart } from "../services/api";
+import Button from "./Button";
 
 const AddToCart = ({ product, quantity, disabled }) => {
 
@@ -14,26 +15,26 @@ const AddToCart = ({ product, quantity, disabled }) => {
   };
 
   return (
-    <Button onClick={handleClick} disabled={disabled}>
+    <AddButton
+      handleClick={handleClick}
+      disabled={disabled}
+      bgColor="black"
+    >
       Add to bag
-    </Button>
+    </AddButton>
   );
 };
 
 export default AddToCart;
 
-const Button = styled.button`
-  padding: 15px 20px;
+const AddButton = styled(Button)`
   margin-bottom: 20px;
-  color: white;
-  background-color: black;
-  border: none;
-  border-radius: 25px;
-  font-size: 1.15em;
-  opacity: ${({disabled}) => disabled ? "0.5" : "1"};
-  cursor: ${({disabled}) => disabled ? "default" : "pointer"};
 
   &:hover {
-    opacity: 0.5;
+    background-color: black;
+    font-weight: 400;
+    color: white;
+    opacity: 0.6;
+    transform: scale(1);
   }
 `;
