@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import homepagePicture from "../assets/images/homepage-pic.jpg";
+import Button from "./Button";
 
 const MainTop = () => {
   return (
@@ -10,7 +11,7 @@ const MainTop = () => {
       <ContentWrapper>
         <Title>Title</Title>
         <Subtitle>Subtitle</Subtitle>
-        <ShopButton>Shop</ShopButton>
+        <Button>Shop</Button>
       </ContentWrapper>
     </MainTopContainer>
   );
@@ -44,21 +45,4 @@ const Title = styled.h1`
 const Subtitle = styled.p`
   font-size: 24px;
   margin-bottom: 20px;
-`;
-
-const ShopButton = styled.button`
-  background: #fff;
-  color: #000;
-  padding: 15px 30px;
-  font-size: 18px;
-  border: none;
-  cursor: pointer;
-  border-radius: 1em;
-  transition-duration: 0.75s;
-
-  &:hover {
-    color: white;
-    background: black;
-    transform: scale(0.9)
-  }
 `;
