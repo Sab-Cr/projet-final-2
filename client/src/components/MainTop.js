@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import homepagePicture from "../assets/images/homepage-picture.png";
+import homepagePicture from "../assets/images/homepage-pic.jpg";
 
 const MainTop = () => {
   return (
