@@ -86,7 +86,7 @@ const Cart = () => {
         <Title>Order Summary</Title>
         <P>Subtotal <span>$ {items ? calculateSubtotal() : 0}</span></P>
         <P>Shipping <span>$ 10.00</span></P>
-        <P>Total <span>$ {items ? Number(calculateSubtotal()) + 10 : 0}</span></P>
+        <P>Total <span>$ {items ? (Number(calculateSubtotal()) + 10).toFixed(2) : 0}</span></P>
         <CheckoutButton bgColor="red">Checkout</CheckoutButton>
       </OrderSummary>
     </Wrapper>
