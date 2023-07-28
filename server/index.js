@@ -3,43 +3,62 @@
 const express = require('express');
 const morgan = require('morgan');
 
-const {getProduct,getProducts, updateProductMinusOne, createAddItemCart, updateQuantityItem, deleteItemCart, getAllItemsCarts,getcategorie, getbodylocation} = require("./shop")
+const { 
+  client, 
+  getProduct, 
+  getProducts, 
+  createAddItemCart, 
+  updateQuantityItem, 
+  deleteItemCart, 
+  getAllItemsCarts, 
+  getcategorie, 
+  getbodylocation 
+} = require("./shop");
+
 const PORT = 4000;
 
-express()
-  .use(function(req, res, next) {
-    res.header(
-      'Access-Control-Allow-Methods',
-      'OPTIONS, HEAD, GET, PUT, POST, DELETE'
-    );
-    res.header(
-      'Access-Control-Allow-Headers',
-      'Origin, X-Requested-With, Content-Type, Accept'
-    );
-    next();
-  })
-  .use(morgan('tiny'))
-  .use(express.static('./server/assets')) 
-  .use(express.json())
-  .use(express.urlencoded({ extended: false }))
-  .use('/', express.static(__dirname + '/'))
+const server = express();
 
-  // REST endpoints?
-  .get('/bacon', (req, res) => res.status(200).json('🥓'))
+server.use(function (req, res, next) {
+  res.header(
+    'Access-Control-Allow-Methods',
+    'OPTIONS, HEAD, GET, PUT, POST, DELETE'
+  );
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
+  next();
+});
+server.use(morgan('tiny'));
+server.use(express.static('./server/assets'));
+server.use(express.json());
+server.use(express.urlencoded({ extended: false }));
+server.use('/', express.static(__dirname + '/'));
 
-  .get("/ecommercewatch/products/:_id", getProduct)
+// endpoints for getting products
+server.get("/ecommercewatch/products", getProducts);
+server.get("/ecommercewatch/products/:_id", getProduct);
 
-  // /ecommercewatch/products?start=10&limit=10 - (pour chercher produit pour le FE)
-  .get("/ecommercewatch/products", getProducts) 
-  
+// endpoints for the cart
+server.patch("/ecommercewatch/quantityitem/:_id/:qty", updateQuantityItem);
+server.post("/ecommercewatch/additemcart", createAddItemCart);
+server.delete("/ecommercewatch/deleteitemcart/:_id", deleteItemCart);
+server.get("/ecommercewatch/getallitemscart", getAllItemsCarts);
 
-  //.patch("/ecommercewatch/productsplus/:_id", updateProductPlusOne)
-  .patch("/ecommercewatch/productsminus/:_id", updateProductMinusOne)
-  .patch("/ecommercewatch/quantityitem/:_id/:qty", updateQuantityItem)
-  .post("/ecommercewatch/additemcart", createAddItemCart)  
-  .delete("/ecommercewatch/deleteitemcart/:_id", deleteItemCart)
-  .get("/ecommercewatch/getallitemscart", getAllItemsCarts)
-  .get("/ecommercewatch/categorie", getcategorie)
-  .get("/ecommercewatch/bodylocation", getbodylocation)
+//get supportive data
+server.get("/ecommercewatch/categorie", getcategorie);
+server.get("/ecommercewatch/bodylocation", getbodylocation);
 
-  .listen(PORT, () => console.info(`Listening on port ${PORT}`));
+// connect to db and server
+const start = async () => {
+  try {
+    await client.connect();
+    console.log("Connected to mongo");
+    server.listen(PORT, () => console.info(`Listening on port ${PORT}`));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+start();
