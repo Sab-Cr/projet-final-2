@@ -1,18 +1,25 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled, { createGlobalStyle } from "styled-components";
 import Button from "./Button";
 
-const Category = ({ title, image, link }) => {
+const Category = ({ title, image}) => {
+  const navigate = useNavigate();
+  const handleClick = () =>{
+    navigate("/products",{state : {title}})
+  }
+  
   return (
     <CategoryContainer className="category">
       <Image className="image" style={{ backgroundImage: `url(${image})` }} />
       <CategoryContent className="category-content">
         <Title>{title}</Title>
         <Button
+          handleClick={handleClick}
           bgColor="black"
           size="small"
         >
-          {link}
+          Shop
         </Button>
       </CategoryContent>
       <HoverStyles />

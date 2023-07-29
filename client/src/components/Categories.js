@@ -9,10 +9,10 @@ import { styled } from "styled-components";
 const Categories = () => {
   return (
     <Content>
-      <Category title="Fitness" image={fitness} link="Shop" />
-      <Category title="Lifestyle" image={lifestyle} link="Shop" />
-      <Category title="Entertainment" image={entertainment} link="Shop" />
-      <Category title="Others" image={allProduct} link="Shop" />
+      <Category title="Fitness" image={fitness} />
+      <Category title="Lifestyle" image={lifestyle} />
+      <Category title="Entertainment" image={entertainment} />
+      <Category title="Others" image={allProduct} />
     </Content>
   );
 };
