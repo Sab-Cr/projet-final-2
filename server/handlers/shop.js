@@ -1,4 +1,9 @@
-const { db, productsCollection, cartCollection } = require('./dbHandler');
+/**
+ * Endpoint handlers
+ */
+
+// imports
+const { db, productsCollection, cartCollection } = require('../db/dbHandler');
 
 // handlers
 const getProducts = async (req, res) => {
