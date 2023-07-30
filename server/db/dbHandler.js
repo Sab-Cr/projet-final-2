@@ -1,4 +1,7 @@
-// setting up mongo db
+/**
+ * Setting up mongodb and its collections
+ */
+
 const { MongoClient } = require("mongodb");
 
 const MONGO_URI =
