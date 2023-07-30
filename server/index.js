@@ -2,9 +2,9 @@
 
 const express = require('express');
 const morgan = require('morgan');
+const { client } = require('./dbHandler');
 
 const { 
-  client, 
   getProduct, 
   getProducts, 
   createAddItemCart, 
