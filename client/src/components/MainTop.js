@@ -1,9 +1,16 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import homepagePicture from "../assets/images/homepage-pic.jpg";
 import Button from "./Button";
 
 const MainTop = () => {
+
+  const navigate = useNavigate();
+
+  const handleClick = ()=>{
+    navigate("/products");
+  }
   return (
     <MainTopContainer
       style={{ backgroundImage: `url(${homepagePicture})` }}
@@ -11,7 +18,7 @@ const MainTop = () => {
       <ContentWrapper>
         <Title>Title</Title>
         <Subtitle>Subtitle</Subtitle>
-        <Button>Shop</Button>
+        <Button handleClick = {handleClick}>Shop</Button>
       </ContentWrapper>
     </MainTopContainer>
   );
