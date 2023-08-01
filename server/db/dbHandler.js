@@ -1,7 +1,7 @@
 /**
  * Setting up mongodb and its collections
  */
-require("dotenv").config({ path: '../.env' });
+require("dotenv").config();
 const { MONGO_URI } = process.env;
 
 const { MongoClient } = require("mongodb");
