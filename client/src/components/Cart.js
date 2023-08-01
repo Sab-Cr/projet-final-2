@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
-import { getCart, deleteCartItem, updateCart } from "../services/api";
+import { getCart, deleteCartItem, deleteCartItems, updateCart, updateQuantity } from "../services/api";
 import fetchRequest from "../utils/fetch-request";
 import Selections from "./Selections";
 import Button from "./Button";
@@ -11,6 +11,7 @@ const Cart = () => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [reload, setReload] = useState(true);
+  const navigate = useNavigate();
 
   // utils
   const calculateSubtotal = () => {
@@ -35,18 +36,28 @@ const Cart = () => {
 
   const handleRemove = async (itemId) => {
     await fetchRequest(() => deleteCartItem(itemId));
-    setReload(prevState => !prevState);
+      setReload(prevState => !prevState);
+    
   };
 
   // populate cart data
   useEffect(() => {
     (async () => {
-      const res = await fetchRequest(getCart);
-      setItems(res.data);
-      setIsLoading(false);
+        const res = await fetchRequest(getCart);
+        setItems(res.data);
+        setIsLoading(false);
     }
     )();
   }, [reload, setItems, setIsLoading]);
+
+  const handleCheckOut = async(items) => {
+    items.forEach(async (item) => {
+      await fetchRequest(() => updateQuantity(item["_id"], item["quantity"]));
+    });
+
+    await fetchRequest(deleteCartItems);
+    navigate('/confirmation');
+  }
 
   // rendering
   if (isLoading) return null;
@@ -87,7 +98,8 @@ const Cart = () => {
         <P>Subtotal <span>$ {items ? calculateSubtotal() : 0}</span></P>
         <P>Shipping <span>$ 10.00</span></P>
         <P>Total <span>$ {items ? (Number(calculateSubtotal()) + 10).toFixed(2) : 0}</span></P>
-        <CheckoutButton bgColor="red">Checkout</CheckoutButton>
+        <CheckoutButton disabled = {items ? false: true} handleClick = {() => handleCheckOut(items)} bgColor="red">Checkout</CheckoutButton>
+        
       </OrderSummary>
     </Wrapper>
   );

@@ -1,11 +1,10 @@
 /**
  * Setting up mongodb and its collections
  */
+require("dotenv").config({ path: '../.env' });
+const { MONGO_URI } = process.env;
 
 const { MongoClient } = require("mongodb");
-
-const MONGO_URI =
-  "mongodb+srv://GroupProject:EcommerceWatch@cluster0.uyidmzs.mongodb.net/watchShop?retryWrites=true&w=majority";
 
 const options = {
   useNewUrlParser: true,

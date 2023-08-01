@@ -11,8 +11,10 @@ const {
   getProduct, 
   getProducts, 
   createAddItemCart, 
-  updateQuantityItem, 
-  deleteItemCart, 
+  updateCartQuantityItem, 
+  updateQuantityItem,
+  deleteItemCart,
+  deleteItemsCart, 
   getAllItemsCarts, 
   getcategorie, 
   getbodylocation 
@@ -23,9 +25,11 @@ router.get("/products", getProducts);
 router.get("/products/:_id", getProduct);
 
 // endpoints for the cart
-router.patch("/quantityitem/:_id/:qty", updateQuantityItem);
+router.patch("/quantityitem/:_id/:qty", updateCartQuantityItem);
+router.patch("/updatequantity/:_id/:qty", updateQuantityItem);
 router.post("/additemcart", createAddItemCart);
 router.delete("/deleteitemcart/:_id", deleteItemCart);
+router.delete("/deleteitemscart", deleteItemsCart);
 router.get("/getallitemscart", getAllItemsCarts);
 
 //get supportive data
