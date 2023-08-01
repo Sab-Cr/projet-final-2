@@ -16,8 +16,8 @@ const MainTop = () => {
       style={{ backgroundImage: `url(${homepagePicture})` }}
     >
       <ContentWrapper>
-        <Title>Title</Title>
-        <Subtitle>Subtitle</Subtitle>
+        <Title>Best Watches In The World</Title>
+        <Subtitle>You know it, we know it, everyone knows it</Subtitle>
         <Button handleClick = {handleClick}>Shop</Button>
       </ContentWrapper>
     </MainTopContainer>
