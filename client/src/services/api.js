@@ -1,4 +1,4 @@
-export const getProducts = async (start, limit, category) => {
+/*export const getProducts = async (start, limit, category) => {
   const res = await fetch(`/ecommercewatch/products?start=${start}&limit=${limit}${!category || category === "All"? "" : "&category="+category}`);
   return await res.json();
 };
@@ -65,4 +65,4 @@ export const updateQuantity = async (itemId, quantity) => {
 export const getCategories = async () => {
   const res = await fetch(`/ecommercewatch/categorie`);
   return await res.json();
-}
+}*/
