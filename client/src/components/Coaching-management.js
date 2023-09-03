@@ -11,6 +11,8 @@ const CoachingManagement = () => {
       {/* Add your content here */}
       <Title>Coaching Vidéos</Title>
       <p> </p>
+      <Title>Coaching Vidéos 2</Title>
+      <p> </p>
       <Title>Coaching de gestion</Title>
     </div>
   );
